@@ -26,14 +26,37 @@ followed by one vertex pair per line representing the edges.
 [python collections](https://docs.python.org/3.6/library/collections.html#module-collections)"""
 
 
+def readGraph(filepath):
+    """input file should be of form:
+        1,2,3,4
+        (1,2)
+        (1,4)
+        (2,3)
+        (2,4)
+    returns an array of vertices (ints) and and array of edges (tuple of two vertices: source to target)
+    """
+    edges = []
+    listOfVertices = []
+
+    with open(filepath, "r") as f:
+        entries = f.read().split("\n")
+
+    for i, entry in enumerate(entries):
+        if i == 0: # the first entry is a list of vertices
+            for i, v in enumerate(entry):
+                if not i % 2: # parse the string to get all numbers
+                    listOfVertices.append(int(v))
+        elif len(entry) > 0: # takes into account empty lines
+            edges.append((int(entry[1]), int(entry[3])))
+
+    return listOfVertices, edges
+
 class Graph(object):
     """An Graph ADT with adjacency matrix.
     """
     def __init__(self, numberOfVertices):
         self.numberOfVertices = numberOfVertices
         self.vertices = [[0]*self.numberOfVertices for _ in range(self.numberOfVertices)]
-        # for _ in range(self.numberOfVertices):
-        #     self.vertices.append([0*self.numberOfVertices])
 
     def addVertex(self):
         """increases the number of vertexes by one.
@@ -62,12 +85,42 @@ class Graph(object):
 
 class Graph(object):
     """An Graph ADT with adjacency list.
+    Graph -> LinkedList -> LinkedListNode(s)
     """
     def __init__(self, numberOfVertices):
         self.numberOfVertices = numberOfVertices
         self.vertices = [[0]*self.numberOfVertices for _ in range(self.numberOfVertices)]
-        # for _ in range(self.numberOfVertices):
-        #     self.vertices.append([0*self.numberOfVertices])
+
+    def getVertex(self, n):
+        """returns the associated LinkedList object if it exists."""
+        return self.vertices[n-1] if self.vertices[n-1] else None
+
+    def addEdge(self, f, t, cost=0):
+        """add an edge from vertex f (a number) to vertex t (a number) with a cost
+        """
+        pass
+        # if f-1 => 0 and f-1 < self.numberOfVertices:
+        #     node = self.vertices[f-1].head
+        #     while node:
+        #         if node.data == t:
+        #             node.edge = weight
+
+        #     self.vertList[f] = new_vertex
+        # if not self.vertList[t]:
+        #     new_vertex = Vertex(t)
+        #     self.vertList[t] = new_vertex
+        # self.vertList[f].addNeighbor(t,cost)
+
+    def getVertices(self):
+        """return all the vertices in the graph"""
+        return self.vertList.keys()
+
+    def __iter__(self):
+        """iterate over the vertex objects in the
+        graph, to use sytax: for v in g
+        """
+        return iter(self.vertList.values())
+
 
     def addVertex(self):
         """increases the number of vertexes by one.
@@ -81,9 +134,10 @@ class Graph(object):
 
     def addEdge(self,vFrom, vTo, weight):
         """adds a directed edge from a vertex to a vertex with a given weight"""
+        pass
         # check to make sure the vertices exist
-        if vFrom-1 >= 0 and vTo-1 >= 0 and vTo-1 <= self.numberOfVertices and vFrom-1 <= self.numberOfVertices:
-            self.vertices[vFrom-1][vTo-1] = weight
+        # if vFrom-1 >= 0 and vTo-1 >= 0 and vTo-1 <= self.numberOfVertices and vFrom-1 <= self.numberOfVertices:
+            # self.vertices[vFrom-1][vTo-1] = weight
 
     def getVertices(self):
         """returns the vertex matrix"""
