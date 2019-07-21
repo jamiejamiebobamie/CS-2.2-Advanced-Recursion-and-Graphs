@@ -133,6 +133,7 @@ class Graph(object):
             current = queue.popleft()
             result.append(current)
             if current == to_vert:
+                # a lit comprehension that takes the result array and casts it to a string w/o adding a comma at the end.
                 result = [str(entry)+"," if i != len(result)-1 else str(entry) for i, entry in enumerate(result)]
                 return "Vertices in shortest path: " + "".join(result) + "\n" + "Number of edges in shortest path: " + str(len(result)-1)
 

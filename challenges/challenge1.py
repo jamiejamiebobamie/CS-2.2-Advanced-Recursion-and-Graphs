@@ -123,7 +123,7 @@ class LLGraph(object):
             self.addEdge(*edge)
 
     def addVertex(self):
-        """increases the number of vertexes by one.
+        """increases the number of vertices by one.
         adds a new edge of weight 0 to each of the existing vertices.
         adds the new vertex to the end of the vertex matrix.
         """
