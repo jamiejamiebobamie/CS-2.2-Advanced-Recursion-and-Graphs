@@ -71,7 +71,7 @@ class Graph(object):
         self.vertices = [[0]*self.numberOfVertices for _ in range(self.numberOfVertices)]
 
     def addVertex(self):
-        """increases the number of vertexes by one.
+        """increases the number of vertices by one.
         adds a new edge of weight 0 to each of the existing vertices.
         adds the new vertex to the end of the vertex matrix.
         """
@@ -100,8 +100,7 @@ class Graph(object):
         return self.vertices[vertex-1]
 
     def breadth_first_search(self, filepath, from_vert, to_vert):
-        """Referenced: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
-            for guidance.
+        """Referenced: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/ for guidance.
 
             Input: A graph file (containing an undirected, unweighted graph), a from_vertex and a to_vertex.
 
@@ -123,7 +122,7 @@ class Graph(object):
 
         result = []
         queue = deque()
-        checkedArray = self.numberOfVertices * [False]
+        checkedArray = self.numberOfVertices * [False] # to keep track of vertices that have been visited already.
 
         queue.append(from_vert)
         checkedArray[from_vert-1] = True
@@ -133,7 +132,7 @@ class Graph(object):
             current = queue.popleft()
             result.append(current)
             if current == to_vert:
-                # a lit comprehension that takes the result array and casts it to a string w/o adding a comma at the end.
+                # a list comprehension that takes the 'result' array and casts it to a string w/o adding a comma after the last item.
                 result = [str(entry)+"," if i != len(result)-1 else str(entry) for i, entry in enumerate(result)]
                 return "Vertices in shortest path: " + "".join(result) + "\n" + "Number of edges in shortest path: " + str(len(result)-1)
 
