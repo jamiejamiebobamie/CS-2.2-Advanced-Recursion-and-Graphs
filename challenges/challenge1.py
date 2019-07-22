@@ -45,15 +45,12 @@ class AMGraph(object):
         adds new edges of weight 0 to each of the existing vertices.
         adds the new vertices to the end of the vertex matrix.
         """
-        if n.isnumeric():   #   numbers wrapped in strings pass this check so...
-            number = int(n) #   cast the number to an int regardless.
-            self.numberOfVertices += number
-            for vertex in self.vertices:
-                addVertices = [0]*number
-                vertex.extend(addVertices)
-            self.vertices.append([0]*self.numberOfVertices)
-        else:
-            raise Exception("Please type a number.")
+        number = int(n) #   cast the number to an int regardless.
+        self.numberOfVertices += number
+        for vertex in self.vertices:
+            addVertices = [0]*number
+            vertex.extend(addVertices)
+        self.vertices.append([0]*self.numberOfVertices)
 
     def addEdge(self,vFrom, vTo, weight=1):
         """adds a directed edge from a vertex to a vertex with a given weight"""
