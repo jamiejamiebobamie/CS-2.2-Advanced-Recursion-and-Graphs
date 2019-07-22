@@ -55,7 +55,7 @@ class AMGraph(object):
         else:
             raise Exception("Please type a number.")
 
-    def addEdge(self,vFrom, vTo, weight):
+    def addEdge(self,vFrom, vTo, weight=1):
         """adds a directed edge from a vertex to a vertex with a given weight"""
         # check to make sure the vertices exist:
         if vFrom-1 >= 0 and vTo-1 >= 0 and vTo-1 <= self.numberOfVertices and vFrom-1 <= self.numberOfVertices:
@@ -106,8 +106,8 @@ class LLGraph(object):
         # print(vertex, self.vertices[vertex-1])
         return self.vertices[vertex-1].getEdges()
 
-    def addEdge(self, f, t, cost=0):
-        """add an edge from vertex f (a number) to vertex t (a number) with a cost
+    def addEdge(self, f, t, cost=1):
+        """add an edge from vertex f (a number) to vertex t (a number) with a default cost/weight of 1
         """
         if f-1 < self.numberOfVertices and f > 0:
             self.vertices[f-1].addNeighbor(t,cost)
@@ -128,15 +128,18 @@ class LLGraph(object):
         adds the new vertex to the end of the vertex matrix.
         """
         self.numberOfVertices += 1
-        for vertex in self.vertices:
-            vertex.append(0)
-        self.vertices.append([0]*self.numberOfVertices)
+        new_linked_list = LinkedList(str(self.numberOfVertices))
+        self.vertices.append(new_linked_list)
 
     def __iter__(self):
         """iterate over the vertex objects in the
         graph, to use sytax: for v in g
         """
-        return iter(self.vertList.values())
+        result = []
+        for v in self.vertices:
+            index = int(v.id)
+            result.append([v.id, self.getEdges(index)])
+        return result
 
 
 class LinkedList(object):
@@ -192,37 +195,3 @@ class LinkedListNode(object):
         self.data = data
         self.weight = weight
         self.next = None
-
-
-if __name__ == "__main__":
-    filepath = "graph_data.txt"
-    data = readGraph(filepath)
-    print("linked list implementation:")
-    newGraph = LLGraph(data[0]) # adding the vertices
-    print("\nvertices:")
-    print(newGraph.getVertices())
-    print("\nadding the edges form file...")
-    newGraph.addEdges(data[1]) # adding their edges
-
-    print("\nprinting graph edges:")
-    for v in newGraph.vertices:
-        vertex_number = int(v.id)
-        print(v.id,newGraph.getEdges(vertex_number))
-
-    print("\nadding an edge from vertex 1 to vertex 3 of weight 5.")
-    newGraph.addEdge(1, 3, 5)
-
-    print("\nprinting graph edges:")
-    for v in newGraph.vertices:
-        vertex_number = int(v.id)
-        print(v.id,newGraph.getEdges(vertex_number))
-
-    print("\nadding an edge from vertex 4 to vertex 3 of weight 2.")
-    newGraph.addEdge(4, 3, 2)
-    print("adding an edge from vertex 3 to vertex 4 of weight 1.")
-    newGraph.addEdge(3, 4)
-
-    print("\nprinting graph edges:")
-    for v in newGraph.vertices:
-        vertex_number = int(v.id)
-        print(v.id,newGraph.getEdges(vertex_number))

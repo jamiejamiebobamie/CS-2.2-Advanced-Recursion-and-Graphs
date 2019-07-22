@@ -52,9 +52,9 @@ def readGraph(filepath):
     for i, entry in enumerate(entries):
         if i == 0: # the first entry is the type of the graph
             graphType = entry
-        if i == 1: # the second entry is a list of vertices
+        elif i == 1: # the second entry is a list of vertices
             listOfVertices = entry.split(",") # parse the string to get all numbers
-        if i > 1 and len(entry) > 0 and len(entry) == 5: # takes into account empty lines and lines not of the correct format
+        elif i > 1 and len(entry) > 0 and len(entry) == 5: # takes into account empty lines and lines not of the correct format
             edges.append((int(entry[1]), int(entry[3])))
             if graphType == "G": # an undirected graph has "mirrored" edges
                 edges.append((int(entry[3]), int(entry[1])))
