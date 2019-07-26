@@ -2,8 +2,6 @@ from challenge2 import *
 
 filepath = "graph_data.txt"
 
-
-# print(data)
 print('\ntesting readGraph function.')
 data = readGraph(filepath)
 assert data[0] == ['1', '2', '3', '4', '5']
