@@ -99,8 +99,6 @@ def find_path(graph, nodeA, nodeB):
     return "Empty graph." # the program should not run this code.
 
 
-# print(find_path(newer_graph, new_graph.vertices[0], new_graph.vertices[4]))
-
 
 def recursive_DFS(graph, nodeA, nodeB):
         def findVertexIndex(vertex_id):
@@ -168,3 +166,30 @@ def recursive_DFS(graph, nodeA, nodeB):
         checkedSet.add(nodeA)
 
         return __helper_recursive_DFS(stack,result,checkedSet)
+
+
+if __name__ == "__main__":
+    filePath = sys.argv[1]
+    from_vert = int(sys.argv[2])
+    to_vert = int(sys.argv[3])
+
+    data = readGraph(filePath)
+    graph = LLGraph(data[0])
+    graph.addEdges(data[1])
+
+    nodeA = None
+    nodeB = None
+
+    for v in graph.vertices:
+        if v.id == str(from_vert):
+            nodeA = v
+        if v.id == str(to_vert):
+            nodeB = v
+
+    if nodeA == None:
+        print(str(from_vert) + " not in graph.")
+    if nodeB == None:
+        print(str(to_vert) + " not in graph.")
+
+    if nodeA and nodeB:
+        print(recursive_DFS(graph, nodeA, nodeB))
