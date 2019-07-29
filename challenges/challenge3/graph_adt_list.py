@@ -53,8 +53,10 @@ class LLGraph(object):
     def addEdge(self, f, t, cost=1):
         """add an edge from vertex f (a number) to vertex t (a number) with a default cost/weight of 1
         """
-        if f-1 < self.numberOfVertices and f > 0:
-            self.vertices[f-1].addNeighbor(t,cost)
+        for i, v in enumerate(self.vertices):
+            f = str(f)
+            if v.id == f:
+                self.vertices[i].addNeighbor(t,cost)
 
     def addEdges(self, edgeData):
         """add the edges from an array of edge data.
@@ -92,9 +94,8 @@ class LLGraph(object):
         graph, to use sytax: for v in g
         """
         result = []
-        for v in self.vertices:
-            index = int(v.id)
-            result.append([v.id, self.getEdges(index)])
+        for i, v in enumerate(self.vertices):
+            result.append([v.id, self.getEdges(i+1)])
         return result
 
 

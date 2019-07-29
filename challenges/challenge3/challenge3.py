@@ -24,18 +24,6 @@ Vertices in the path: 1,2,3,5
 from graph_reader import *
 from graph_adt_list import *
 
-filepath = "graph_data.txt"
-data = readGraph(filepath)
-# print(data)
-new_graph = LLGraph(data[0])
-new_graph.addEdges(data[1])
-
-filepath2 = "graph_data2.txt"
-data2 = readGraph(filepath2)
-# print(data2)
-newer_graph = LLGraph(data2[0])
-newer_graph.addEdges(data2[1])
-
 
 def find_path(graph, nodeA, nodeB):
     """Iterative DFS to find the path from nodeA to nodeB.
@@ -160,7 +148,7 @@ def recursive_DFS(graph, nodeA, nodeB):
         if nodeA == nodeB:
             # check to see if the vertex has a path to itself
             for v in nodeA.getNeighbors():
-                if v == nodeA.id:
+                if str(v) == nodeA.id:
                     return [nodeA.id]
             return "The node_to and the node_from are the same node, but there is no self-pointing edges."
 
@@ -180,19 +168,3 @@ def recursive_DFS(graph, nodeA, nodeB):
         checkedSet.add(nodeA)
 
         return __helper_recursive_DFS(stack,result,checkedSet)
-
-# print(new_graph.__iter__())
-# print(data)
-print(find_path(newer_graph, new_graph.vertices[1], new_graph.vertices[1]))
-print(recursive_DFS(newer_graph, new_graph.vertices[1], new_graph.vertices[1]))
-# D
-# 1,2,3,4,5
-# (1,1)
-# (1,1)
-# (2,3)
-# (2,4)
-# (3,5)
-# (3,1)
-# (4,5)
-# (5,2)
-# (5,3)
