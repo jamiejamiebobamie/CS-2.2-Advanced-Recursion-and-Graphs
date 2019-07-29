@@ -192,4 +192,10 @@ if __name__ == "__main__":
         print(str(to_vert) + " not in graph.")
 
     if nodeA and nodeB:
-        print(recursive_DFS(graph, nodeA, nodeB))
+        path = recursive_DFS(graph, nodeA, nodeB)
+        # print(type(path))
+        if not type(path) == str:
+            print("There exists a path between vertex 1 and 5: TRUE\n"
+            "Vertices in the path: " + ", ".join(path))
+        else:
+            print("There exists a path between vertex 1 and 5: FALSE")
