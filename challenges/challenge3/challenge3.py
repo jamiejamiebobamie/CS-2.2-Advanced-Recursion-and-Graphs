@@ -1,12 +1,8 @@
 """Challenge 3
-
 Update your Graph ADT code to do the following
-
 Implement Recursive Depth-first search to determine if there is a path between two vertices in a directed graph.
 Input: A file containing a directed graph, a from_vertex and a to_vertex.
-
 python3 challenge_3.py graph_data.txt 1 5
-
 D
 1,2,3,4,5
 (1,2)
@@ -16,7 +12,6 @@ D
 (3,5)
 (5,2)
 Output: If there is a path between the vertices (T/F) and the vertices in that path.
-
 There exists a path between vertex 1 and 5: TRUE
 Vertices in the path: 1,2,3,5
 """
