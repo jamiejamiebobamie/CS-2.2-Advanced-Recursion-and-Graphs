@@ -8,7 +8,8 @@
 """
 Git Issues:
 
- -RE-RAN TEST FILE WITH NEW METHOD NAMES AND RECIEVED THIS OUTPUT:
+ -ADDED UNITTESTS WITH THE UNITTEST MODULE, BUT HAD TROUBLE OVERRIDING THE __INIT__ FUNCTION.
+    RE-RAN ORIGINAL TEST FILE WITH NEW METHOD NAMES AND RECIEVED THIS OUTPUT:
                 ➜  challenges git:(master) ✗ python3 challenge1_test.py
 
                 testing linked list implementation...
@@ -16,7 +17,6 @@ Git Issues:
 
                 testing adjacenecy matrix implementation...
                 all adjacenecy matrix graph tests pass
-
 
     (TO YOUR COMMENTS: "test file runs" AND "test code does not run")
 
