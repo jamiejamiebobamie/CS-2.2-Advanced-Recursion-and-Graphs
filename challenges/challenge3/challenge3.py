@@ -23,7 +23,7 @@ from graph_adt_list import *
 def find_path(graph, nodeA, nodeB):
     """Iterative DFS to find the path from nodeA to nodeB.
        Returns an array of index.ids starting from nodeA's id to nodeB's id.
-       Returns error messages if nodeA or nodeB is not in the graph, if there is
+       Returns error messages if nodeA or nodeB are not in the graph, if there is no
        graph entered or if there is no path from nodeA to nodeB
     """
 

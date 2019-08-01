@@ -36,8 +36,9 @@ Git Issues:
     "graph_data.txt" contains the above sample input.
     (TO YOUR COMMENT: "code runs on provided sample input")
 
- code is well documented
- error handling
+ -ADDED COMMENTS TO ALL CODE: "code is well documented"
+
+ -ADDED ERROR HANDLING TO SOME METHODS IN THE FORM OF CONDITIONALS: "error handling"
 
  -ADDED DRIVER CODE.
 
@@ -69,6 +70,9 @@ def read_graph(filepath):
 
     return listOfVertices, edges
 
+from collections import deque as d
+
+
 """ Vertex Class
 A helper class for the Graph class that defines vertices and vertex neighbors.
 """
@@ -80,13 +84,13 @@ class Vertex(object):
         stored in a dictionary with key = vertex,
         value = weight of edge between self and neighbor.
         """
-        self.id = vertex
-        self.neighbors = {}
+        self.id = vertex                # string
+        self.neighbors = {}             # dictionary of vertex_id's to int weights
 
     def add_neighbor(self, vertex, weight=0):
         """add a neighbor along a weighted edge"""
         if vertex not in self.neighbors:
-            self.neighbors[vertex] = weight
+            self.neighbors[vertex] = weight # add vertex-weight to self.neighbors dictionary
 
     def __str__(self):
         """output the list of neighbors of this vertex"""
@@ -94,18 +98,15 @@ class Vertex(object):
 
     def get_neighbors(self):
         """return the neighbors of this vertex"""
-        result = []
-        for key in self.neighbors.keys():
-            result.append(key)
-        return result
+        return self.neighbors.keys()    # get all of the keys from the neighbors dictionary, keys == vertex_id strings
 
     def get_id(self):
         """return the id of this vertex"""
-        return self.id
+        return self.id                  # get the vertex's id, a string
 
     def get_edge_weight(self, vertex):
         """"return the weight of this edge"""
-        return self.neighbors[vertex] if self.neighbors[vertex] else None
+        return self.neighbors[vertex] if self.neighbors[vertex] else None #return the weight of a given vertex if the vertex is present in the self.neighbors dictionary
 
 """ Graph Class
 A class demonstrating the essential
@@ -113,47 +114,39 @@ facts and functionalities of graphs.
 """
 
 class Graph:
-    """ Feedback from Challenge 1:
-
-        'Use a dictionary to represent the adjacency list - no need to implement a LinkedList here.
-        No output - readGraph method is never called.'
-
-        Implementing the graph with a dictionary of array vertex objects as values:
-
-    """
     def __init__(self):
         """ initializes a graph object with an empty dictionary.
         """
-        self.vertList = {}
+        self.vertList = {}              # a dictionary of vertex_id's to vertex objects
         self.numVertices = 0
 
     def add_vertex(self, key):
         """add a new vertex object to the graph with
         the given key and return the vertex
         """
-        self.numVertices += 1
-        new_vertex = Vertex(key)
-        self.vertList[key] = new_vertex
-        return self.vertList[key]
+        self.numVertices += 1           # increment the count of number of vertices
+        new_vertex = Vertex(key)        # create a new vertex object with the given vertex_id
+        self.vertList[key] = new_vertex # add the vertex to the dictionary of self.vertList as vertex_id : vertex object
+        return self.vertList[key]       # return the vertex object
 
     def get_vertex(self, n):
         """return the vertex if it exists"""
-        return self.vertList[n] if self.vertList[n] else None
+        return self.vertList[n] if self.vertList[n] else None #return the vertex if the vertex is present in the self.vertList dictionary
 
     def add_edge(self, f, t, cost=0):
         """add an edge from vertex f to vertex t with a cost
         """
-        if not self.vertList[f]:
-            new_vertex = Vertex(f)
-            self.vertList[f] = new_vertex
-        if not self.vertList[t]:
-            new_vertex = Vertex(t)
-            self.vertList[t] = new_vertex
-        self.vertList[f].add_neighbor(t,cost)
+        if not self.vertList[f]:            # if the from_vert is not in the self.vertList
+            new_vertex = Vertex(f)          # make a new vertex object
+            self.vertList[f] = new_vertex   # add it to the self.vertList
+        if not self.vertList[t]:            # if the to_vert is not in the self.vertList
+            new_vertex = Vertex(t)          # make a new vertex object
+            self.vertList[t] = new_vertex   # add it to the self.vertList
+        self.vertList[f].add_neighbor(t,cost)# add the to_vert to the from_vert's neighbors dictionary with a weight
 
     def get_vertices(self):
         """return all the vertices in the graph"""
-        return self.vertList.keys()
+        return self.vertList.keys()         # return all of the keys in the self.vertList dictionary, string vertex_ids
 
     def __iter__(self):
         """iterate over the vertex objects in the
@@ -162,7 +155,7 @@ class Graph:
         result = []
         for v in self.vertList:
             result.append((v, self.vertList[v].get_neighbors()))
-        return result
+        return result                       # return all of the vertex objects of the graph
 
 class AMGraph(object):
     """An Graph ADT with adjacency matrix.
@@ -178,16 +171,16 @@ class AMGraph(object):
         adds new edges of weight 0 to each of the existing vertices.
         adds the new vertices to the end of the vertex matrix.
         """
-        number = int(n) #   cast the number to an int regardless.
-        self.numberOfVertices += number
-        for vertex in self.vertices:
-            addVertices = [0]*number
+        number = int(n)                     # cast the number to an int regardless.
+        self.numberOfVertices += number     # increment the self.numberOfVertices by the number
+        for vertex in self.vertices:        # iterate through the self.vertices
+            addVertices = [0]*number        # add a new row of 0's to the adjacenet matrix
             vertex.extend(addVertices)
         self.vertices.append([0]*self.numberOfVertices)
 
     def add_edge(self,vFrom, vTo, weight=1):
         """adds a directed edge from a vertex to a vertex with a given weight"""
-        # check to make sure the vertices exist:
+                                            # check to make sure the vertices exist:
         if vFrom-1 >= 0 and vTo-1 >= 0 and vTo-1 <= self.numberOfVertices and vFrom-1 <= self.numberOfVertices:
             self.vertices[vFrom-1][vTo-1] = weight
 
@@ -332,7 +325,7 @@ class LinkedList(object):
         result = []
         node = self.head
 
-        # if the head is empty
+        # if the head is empty. there are no adjacent vertices.
         if node == None:
             return "No out-going edges."
 
@@ -379,9 +372,9 @@ class LinkedListNode(object):
     def __init__(self, data, weight=1):
         """ initializes a linked list node object.
         """
-        self.data = data
-        self.weight = weight
-        self.next = None
+        self.data = data # string
+        self.weight = weight # int
+        self.next = None # pointer to LLNode object
 
 
 if __name__ == "__main__":
