@@ -39,6 +39,8 @@ Git Issues:
  code is well documented
  error handling
 
+ -ADDED DRIVER CODE.
+
  """
 
 from collections import deque as d
@@ -92,7 +94,10 @@ class Vertex(object):
 
     def get_neighbors(self):
         """return the neighbors of this vertex"""
-        return self.neighbors.keys()
+        result = []
+        for key in self.neighbors.keys():
+            result.append(key)
+        return result
 
     def get_id(self):
         """return the id of this vertex"""
@@ -154,7 +159,10 @@ class Graph:
         """iterate over the vertex objects in the
         graph, to use sytax: for v in g
         """
-        return iter(self.vertList.values())
+        result = []
+        for v in self.vertList:
+            result.append((v, self.vertList[v].get_neighbors()))
+        return result
 
 class AMGraph(object):
     """An Graph ADT with adjacency matrix.
@@ -205,16 +213,20 @@ class LLGraph(object):
         """
         self.numberOfVertices = len(vertices)
         self.vertices = []
+        # iterate through the input vertices, create a linked list object for each vertex, and insert the vertex into the self.vertices array
         for _ in range(self.numberOfVertices):
             new_LL = LinkedList(vertices[_])
             self.vertices.append(new_LL)
 
     def get_vertex(self, n):
         """returns the associated LinkedList object if it exists."""
+        # check to ensure the given 'n' index is in bounds of the self.vertices array and then return the LL object at that index.
         return self.vertices[n-1] if n-1 < self.numberOfVertices and n > 0 else "Vertex index out of bounds. Please enter a vertex id between 1 and " + str(self.numberOfVertices) + "."
 
     def get_vertices(self):
         """returns the id's/data of all the vertices in the graph"""
+        # iterate through the self.vertices array and append the vertex id's for each vertex
+        # reutrn the array of vertex ids
         result = []
         for v in self.vertices:
             result.append(v.id)
@@ -222,17 +234,23 @@ class LLGraph(object):
 
     def get_neighbors_of_a_vertex(self, vertex):
         """returns the id's/data of all of the neighbors of a given vertex."""
+        # check to ensure the vertex's exists in the self.vertices array
+        # return the neighbors associated with that vertex
         if vertex > 0 and vertex-1 < self.numberOfVertices:
             return self.vertices[vertex-1].get_neighbors()
 
     def get_edges(self, vertex):
         """returns the the edges for a single vertex"""
-        # print(vertex, self.vertices[vertex-1])
-        return self.vertices[vertex-1].get_edges()
+        # check to ensure the vertex's exists in the self.vertices array
+        # return the edge associated with that vertex
+        if vertex-1 < self.numberOfVertices and vertex > 0:
+            return self.vertices[vertex-1].get_edges()
 
     def add_edge(self, f, t, cost=1):
         """add an edge from vertex f (a number) to vertex t (a number) with a default cost/weight of 1
         """
+        # check to ensure the vertex's exists in the self.vertices array
+        # add the neighbor to the LL object with a target vertex and a cost / weight
         if f-1 < self.numberOfVertices and f > 0:
             self.vertices[f-1].add_neighbor(t,cost)
 
@@ -243,6 +261,8 @@ class LLGraph(object):
             ( from_vert, to_vert, optional_weight ) , ...
                                                             ]
         """
+        # iterate through the edgeData array
+        # add the new edges using the graph's add_edge method
         for edge in edgeData:
             self.add_edge(*edge)
 
@@ -251,6 +271,9 @@ class LLGraph(object):
         adds a new edge of weight 0 to each of the existing vertices.
         adds the new vertex to the end of the vertex matrix.
         """
+        # increment the numberOfVertices value by one
+        # intialize a new linkedlist object
+        # append the LL object to the end of the self.vertices array
         self.numberOfVertices += 1
         new_linked_list = LinkedList(str(self.numberOfVertices))
         self.vertices.append(new_linked_list)
@@ -260,6 +283,9 @@ class LLGraph(object):
         graph, to use sytax: for v in g
         """
         result = []
+        # iterate through the array of linkedlist objects
+        # append the LinkedList object's id's and their edges to the result array
+        # return the result array
         for v in self.vertices:
             index = int(v.id)
             result.append([v.id, self.get_edges(index)])
@@ -277,12 +303,23 @@ class LinkedList(object):
     def add_neighbor(self,data, weight=1):
         """Adds a single vertex to the linked list.
         """
+        # initialize a new LinkedListNode
         new_vertex = LinkedListNode(data, weight)
+
+        # check to see if the head is empty
+        # if it is set the head and the tail to the new LinkedListNode
         if self.head == None:
             self.head = self.tail = new_vertex
+
+        # if the head == the tail, set the new LinkedListNode to be the tail
+        # set the head's next node to the new LinkedListNode
         elif self.head == self.tail:
             self.tail = new_vertex
             self.head.next = new_vertex
+
+        # otherwise there are more than two nodes in the list
+        # set the current tail's next value to point to the new LinkedListNode
+        # set the new LinkedListNode to be the new tail
         else:
             self.tail.next = new_vertex
             self.tail = new_vertex
@@ -291,11 +328,27 @@ class LinkedList(object):
     def get_neighbors(self):
         """Returns a list of all of the adjacent vertices' ids/data.
         """
+
         result = []
         node = self.head
-        while node:
-            result.append(node.data)
-            node = node.next
+
+        # if the head is empty
+        if node == None:
+            return "No out-going edges."
+
+        # if there are more than two vertices in the list
+        # iterate through them and return their data
+        if self.head != self.tail:
+            while node:
+                result.append(node.data)
+                node = node.next
+            else:
+                return result
+
+        # if the head == the tail, there is only one vertex in the list. return its data
+        else:
+            return (node.data)
+
         return result
 
     def get_edges(self):
@@ -304,14 +357,21 @@ class LinkedList(object):
         """
         result = []
         node = self.head
+
+        # if the head is empty
         if node == None:
             return "No out-going edges."
+
+        # if there are more than two vertices in the list
+        # iterate through them and return their data and weights
         if self.head != self.tail:
             while node:
                 result.append((int(self.id),node.data,node.weight))
                 node = node.next
             else:
                 return result
+
+        # if the head == the tail, there is only one vertex in the list. return its data and weight
         else:
             return (int(self.id),node.data,node.weight)
 
@@ -322,3 +382,27 @@ class LinkedListNode(object):
         self.data = data
         self.weight = weight
         self.next = None
+
+
+if __name__ == "__main__":
+    filePath = "graph_data.txt"
+
+    # read file. intialize vertices and edges.
+    vertices, edges = read_graph(filePath)
+
+    # make new graph object
+    new = Graph()
+
+    # add vertices
+    for v in vertices:
+        new.add_vertex(v)
+
+    # convert source vertex and target vertex integer id's to strings
+    # add the edges to the respective dictionaries.
+    for source,target in edges:
+        source = str(source)
+        target = str(target)
+        new.add_edge(source,target)
+
+    # iterating over vertices in the graph and returning the vertices and their neighbors if any
+    print(new.__iter__())
