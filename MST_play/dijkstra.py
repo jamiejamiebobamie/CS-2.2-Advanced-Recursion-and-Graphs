@@ -4,6 +4,8 @@ from graph_reader import *
 from graph_adt_list import *
 
 def dijkstra(graph):
+    """My attempt at writing Dijkstra's algorithm. Not working.
+    """
 
     unvisited = []
     visited = []
