@@ -15,19 +15,19 @@ The solution to the knapsack problem is to take these items
 
 
 
-def memoize(f):
-    memo = {}
-    def helper(x,y,z):
-        entry = len(x)
-        print(entry, x)
-        if entry not in memo:
-            memo[entry] = f(x,y,z)
-        return memo[entry]
-    return helper
+# def memoize(f):
+#     memo = {}
+#     def helper(x,y,z):
+#         entry = len(x)
+#         print(entry, x)
+#         if entry not in memo:
+#             memo[entry] = f(x,y,z)
+#         return memo[entry]
+#     return helper
 
 # from the Advanced Recursion & Dynamic Programming - 2 slides
 # https://www.python-course.eu/python3_memoization.php
-@memoize
+# @memoize
 def knapsack(items, len_items, capacity):
     # print(items, len_items, capacity)
     if len(items):
@@ -57,3 +57,50 @@ items = [ [10, 45], [20, 67], [25, 2], [30, 55], [17, 12], [5, 13], [40, 50], [1
 capacity = 50
 
 print(knapsack(items, len(items), capacity))
+
+
+
+def driver_function(W , wt , val , n):
+    setOfIndices = set()
+    def knapSack(W , wt , val , n):
+        """ Code copied from:
+                https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
+            Input:
+                W: A max weight of the carrying capacity of the knapsack
+                wt: An array of integer weights of the items
+                val: An array of integer values of the items
+                n: An integer, the number of items
+
+            Output:
+                The max value that can be carried in the knapsack
+
+        """
+
+        # Base Case: if the number of items is zero or if the carryign capacity of the knapsack is 0
+        if n == 0 or W == 0 :
+            return 0
+
+        # If weight of the nth item is more than knapsack's capacity
+        # W, then this item cannot be included in the optimal solution
+        if (wt[n-1] > W):
+            return knapSack(W , wt , val , n-1)
+
+        # return the maximum of two cases:
+        # (1) nth item included
+        # (2) not included
+        else:
+            return max(val[n-1] + knapSack(W-wt[n-1] , wt , val , n-1),
+                       knapSack(W , wt , val , n-1))
+
+    maxValue = knapSack(W , wt , val , n)
+    return maxValue, setOfIndices
+# end of function knapSack
+
+# To test above function
+val = [60, 100, 120, 230]
+wt = [10, 20, 30, 40]
+W = 50
+n = len(val)
+print(driver_function(W , wt , val , n))
+
+# This code is contributed by Nikhil Kumar Singh
