@@ -14,14 +14,20 @@ The solution to the knapsack problem is to take these items
     [[size3, value3], [size5,value5]"""
 
 
-# items = [ [size1, value1], [size2,value2 ], [size3, value3], [size4, value4], [size5, value5], [size6, value6], [size7, value7], [size8, value8], [size9, value9], [size10, value10]]
-items = [ [10, 45], [20, 67], [25, 2], [30, 55], [17, 12], [5, 13], [40, 50], [19, 22], [22, 60], [9, 12] ]
 
-# print(len(items))
-
-capacity = 50
+def memoize(f):
+    memo = {}
+    def helper(x,y,z):
+        entry = len(x)
+        print(entry, x)
+        if entry not in memo:
+            memo[entry] = f(x,y,z)
+        return memo[entry]
+    return helper
 
 # from the Advanced Recursion & Dynamic Programming - 2 slides
+# https://www.python-course.eu/python3_memoization.php
+@memoize
 def knapsack(items, len_items, capacity):
     # print(items, len_items, capacity)
     if len(items):
@@ -42,5 +48,12 @@ def knapsack(items, len_items, capacity):
 
     return max(value_without, value_with)
 
+
+# items = [ [size1, value1], [size2,value2 ], [size3, value3], [size4, value4], [size5, value5], [size6, value6], [size7, value7], [size8, value8], [size9, value9], [size10, value10]]
+items = [ [10, 45], [20, 67], [25, 2], [30, 55], [17, 12], [5, 13], [40, 50], [19, 22], [22, 60], [9, 12] ]
+
+# print(len(items))
+
+capacity = 50
 
 print(knapsack(items, len(items), capacity))
