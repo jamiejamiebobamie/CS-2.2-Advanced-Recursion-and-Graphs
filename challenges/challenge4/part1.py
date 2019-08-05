@@ -15,54 +15,10 @@ The solution to the knapsack problem is to take these items
 
 
 
-# def memoize(f):
-#     memo = {}
-#     def helper(x,y,z):
-#         entry = len(x)
-#         print(entry, x)
-#         if entry not in memo:
-#             memo[entry] = f(x,y,z)
-#         return memo[entry]
-#     return helper
-
-# from the Advanced Recursion & Dynamic Programming - 2 slides
-# https://www.python-course.eu/python3_memoization.php
-# @memoize
-def knapsack(items, len_items, capacity):
-    # print(items, len_items, capacity)
-    if len(items):
-        # store.append(items.pop())
-        # item = store[len(store)-1]
-        item = items.pop()
-
-	# base case
-    if len(items) <= 0 or capacity <= 0:
-        return 0
-    if item[0] > capacity:
-        return knapsack( items[len_items:], len_items, capacity)
-
-	#two choices
-    len_items-=1
-    value_without = knapsack( items[:len_items], len_items, capacity)
-    value_with = knapsack(items[:len_items], len_items, capacity - item[0]) + item[1]
-
-    return max(value_without, value_with)
-
-
-# items = [ [size1, value1], [size2,value2 ], [size3, value3], [size4, value4], [size5, value5], [size6, value6], [size7, value7], [size8, value8], [size9, value9], [size10, value10]]
-items = [ [10, 45], [20, 67], [25, 2], [30, 55], [17, 12], [5, 13], [40, 50], [19, 22], [22, 60], [9, 12] ]
-
-# print(len(items))
-
-capacity = 50
-
-print(knapsack(items, len(items), capacity))
-
-
-
 def driver_function(W , wt , val , n):
-    setOfIndices = set()
-    def knapSack(W , wt , val , n):
+    """The driver function for possible memoization dictionary storage.
+    """
+    def knapsack(W , wt , val , n):
         """ Code copied from:
                 https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
             Input:
@@ -73,7 +29,6 @@ def driver_function(W , wt , val , n):
 
             Output:
                 The max value that can be carried in the knapsack
-
         """
 
         # Base Case: if the number of items is zero or if the carryign capacity of the knapsack is 0
@@ -81,26 +36,29 @@ def driver_function(W , wt , val , n):
             return 0
 
         # If weight of the nth item is more than knapsack's capacity
-        # W, then this item cannot be included in the optimal solution
+        # W, then this item cannot be included in the optimal solution.
+        # Do not subtract the item's weight from W and move on to the next item.
         if (wt[n-1] > W):
-            return knapSack(W , wt , val , n-1)
+            return knapsack(W , wt , val , n-1)
 
-        # return the maximum of two cases:
-        # (1) nth item included
-        # (2) not included
+        # return the maximum of two cases: nth item included and not included
         else:
-            return max(val[n-1] + knapSack(W-wt[n-1] , wt , val , n-1),
-                       knapSack(W , wt , val , n-1))
+            return max(val[n-1] + knapsack(W-wt[n-1] , wt , val , n-1),
+                       knapsack(W , wt , val , n-1))
 
-    maxValue = knapSack(W , wt , val , n)
-    return maxValue, setOfIndices
-# end of function knapSack
+    # call the knapsack function
+    maxValue = knapsack(W , wt , val , n)
 
-# To test above function
+    item_weight_to_value_dictionary = {}
+    for i, item_weight in enumerate(wt):
+        item_weight_to_value_dictionary[str(item_weight)] = str(val[i])
+
+
+    return "For given input: knapsack weight capacity: " + str(W)+ "item weight and value arrays: " + item_weight_to_value_dictionary+"\nthe max value is "+ str(maxValue)
+
+
 val = [60, 100, 120, 230]
 wt = [10, 20, 30, 40]
 W = 50
 n = len(val)
 print(driver_function(W , wt , val , n))
-
-# This code is contributed by Nikhil Kumar Singh
