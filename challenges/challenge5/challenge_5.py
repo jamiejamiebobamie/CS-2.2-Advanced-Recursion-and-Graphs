@@ -20,9 +20,33 @@ vertex) may be performed in constant time each, so the overall algorithm takes l
 
     -https://en.wikipedia.org/wiki/Eulerian_path#Fleury's_algorithm"""
 
-def test_eularian_cycle(g=None):
+def test_eularian_cycle(edges=None):
+    """Function takes in an array of edges (to_vert, from_vert) in a graph and adds them to a dictionary.
+    """
 
-    is_eularian_cycle = bool(random.getrandbits(1))
+    if edges == None:
+        return "Please input a graph to be tested."
+
+    is_eularian_cycle = True
+
+    edge_dict = {}
+    for edge in edges:
+        if edge[0] not in edge_dict:
+            edge_dict[edge[0]] = [edge[1]]
+        else:
+            edge_dict[edge[0]].append(edge[1])
+        if edge[1] not in edge_dict:
+            edge_dict[edge[1]] = [edge[0]]
+        else:
+            edge_dict[edge[1]].append(edge[0])
+
+    print(edge_dict)
+
+
+    for key,value in edge_dict.items():
+        if len(value) != 1 or not len(value) % 2:
+            print(len(value), len(value) % 2)
+            is_eularian_cycle = False
 
     return "This graph is Eulerian: " + str(is_eularian_cycle)
 
@@ -30,4 +54,4 @@ vertices, edges = readGraph("graph_data.txt")
 g = LLGraph(vertices)
 g.addEdges(edges)
 print(g.__iter__())
-print(test_eularian_cycle(g))
+print(test_eularian_cycle(edges))
