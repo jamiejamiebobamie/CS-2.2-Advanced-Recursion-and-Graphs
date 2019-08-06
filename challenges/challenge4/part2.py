@@ -1,6 +1,8 @@
 def driver_function(prices,n):
+    """The driver holds the lookup dictionary and makes the original function call to rodcut function.
+    """
     dict = {}
-    def rodCut(prices,n):
+    def rodcut(prices,n):
         """
             Note:
                 this function was found in C++ on: https://www.techiedelight.com/rot-cutting/
@@ -32,7 +34,7 @@ def driver_function(prices,n):
             # reference the price for piece A, taking into account the index of piece A will be: _-1
             # need to determine the cost(s) of all pieces resulting from that cut.
             # so piece B is fed into "the wood chipper": the rodCut function, to determine its cost(s)
-                cost = prices[_-1] + rodCut(prices, n - _)
+                cost = prices[_-1] + rodcut(prices, n - _)
                 dict[cut] = cost
 
             # if the resuting cost is greater than the local maxValue set the local maxValue to the cost
@@ -42,7 +44,7 @@ def driver_function(prices,n):
         # return the maxValue to the outside scope.
         return maxValue
 
-    maxValue = rodCut(prices,n)
+    maxValue = rodcut(prices,n)
     printable_prices = [str(price) for price in prices]
 
     return "For this input:\n\n"+ "prices: " + ", ".join(printable_prices) + "\nwood length: " + str(n) + "\n\nThe solution is:\n\n" + str(maxValue)
@@ -54,6 +56,6 @@ def driver_function(prices,n):
 prices = [1,5,8,9,10,17,17,20,24,26]
 
 # the length of the piece of wood:
-n = 30
+n = 4
 
 print(driver_function(prices, n))
