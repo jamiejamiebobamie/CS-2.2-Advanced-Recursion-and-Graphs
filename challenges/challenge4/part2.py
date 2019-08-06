@@ -1,16 +1,3 @@
-# In your README - Clearly define the problem. Give full credit to any references you use.
-# In your README - Define in words, the 5 steps of DP as applied to this problem.
-# Write a memoized recursive solution to this problem with hardcoded sample input of size 10. You do not have to read sample data from a file. Write your code in dynamic_program.py and other files as needed.
-# Print the sample input and solution output similar to how it is shown below with actual data from your problem.
-# For this input:
-#     XXXXX
-#
-# The solution is:
-#     YYYYYYY
-
-
-
-
 def driver_function(prices,n):
     dict = {}
     def rodCut(prices,n):
@@ -27,8 +14,8 @@ def driver_function(prices,n):
         # each time the function gets called initialize maxValue to be negative infinity
         maxValue = float('-inf')
 
-        # if the input length of the rod is 0, return 0
-        if n == 0:
+        # return 0 if the input length of the rod is 0 or if the input length is greater than the array as that will throw list index out of range errors below
+        if n == 0 or len(prices) <= n:
             return 0
 
         # generate numbers between 1 and the current rod_length + 1 (+1 because range() is non-inclusive at the upper bounds)
@@ -61,10 +48,12 @@ def driver_function(prices,n):
     return "For this input:\n\n"+ "prices: " + ", ".join(printable_prices) + "\nwood length: " + str(n) + "\n\nThe solution is:\n\n" + str(maxValue)
 
 
-# i + 1 == wood length: [1,2,3,4,5,6,7,8,9,10]
+# i + 1 == wood length:
+# [1,2,3,4,5,6,7,8,9,10]
+# example: a cut of wood of length 2 is 5 (dollars?)
 prices = [1,5,8,9,10,17,17,20,24,26]
 
-# the length of the piece of wood
-n = 10
+# the length of the piece of wood:
+n = 30
 
 print(driver_function(prices, n))

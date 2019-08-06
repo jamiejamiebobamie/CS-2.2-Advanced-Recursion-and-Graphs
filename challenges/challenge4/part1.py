@@ -1,22 +1,10 @@
-"""Part 1: Solve the Knapsack Problem using Dynamic Programming.
 
-In your README - Clearly define the problem. Give full credit to any references you use.
-In your README - Define in words, the 5 steps of DP as applied to this problem.
-Write a memoized recursive solution to this problem with hardcoded sample input of size 10.
-You do not have to read sample data from a file. Write your code in knapsack.py and other files as needed.
-Print the sample input and solution output similar to how it is shown below (your structure for storing input may be different).
-For this input:
-    List of items with size and value:
-    [[size1, value1],[size2,value2 ],.....[size10, value10]]
-    Size of knapsack: S
-
-The solution to the knapsack problem is to take these items
-    [[size3, value3], [size5,value5]"""
 
 
 
 def driver_function(W , wt , val , n):
     """The driver function for possible memoization dictionary storage.
+       DID NOT IMPLEMENT MEMOIZATION FOR THIS FUNCTION.
     """
     def knapsack(W , wt , val , n):
         """ Code copied from:
@@ -49,16 +37,16 @@ def driver_function(W , wt , val , n):
     # call the knapsack function
     maxValue = knapsack(W , wt , val , n)
 
-    item_weight_to_value_dictionary = {}
+    item_weight_to_value = []
     for i, item_weight in enumerate(wt):
-        item_weight_to_value_dictionary[str(item_weight)] = str(val[i])
+        item_weight_to_value.append("#: "+str(i)+", w: "+str(item_weight)+ ", v: " + str(val[i])+" ")
 
 
-    return "For given input: knapsack weight capacity: " + str(W)+ "item weight and value arrays: " + item_weight_to_value_dictionary+"\nthe max value is "+ str(maxValue)
+    return "For given input: knapsack-weight capacity: " + str(W)+ "\nItem weight and value: " + "| ".join(item_weight_to_value) + ". The max value is "+ str(maxValue)
 
 
-val = [60, 100, 120, 230]
-wt = [10, 20, 30, 40]
+val = [60, 100, 120, 230, 60, 30, 20, 10, 5, 190]
+wt = [10, 20, 30, 40, 17, 16, 15, 1, 23, 22]
 W = 50
 n = len(val)
 print(driver_function(W , wt , val , n))
