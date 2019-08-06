@@ -1,7 +1,3 @@
-
-
-
-
 def driver_function(W , wt , val , n):
     """The driver function for possible memoization dictionary storage.
        DID NOT IMPLEMENT MEMOIZATION FOR THIS FUNCTION.
