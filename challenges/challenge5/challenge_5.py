@@ -3,49 +3,69 @@ from graph_adt_list import *
 from graph_reader import *
 
 
-"""Choose any starting vertex v, and follow a trail of edges from that vertex until returning to v.
-It is not possible to get stuck at any vertex other than v,
-because the even degree of all vertices ensures that,
-when the trail enters another vertex w there must be an unused edge leaving w.
-The tour formed in this way is a closed tour, but may not cover all the vertices and edges of the initial graph.
-As long as there exists a vertex u that belongs to the current tour but that has
-adjacent edges not part of the tour, start another trail from u,
-following unused edges until returning to u, and join the tour formed in this way to the previous tour.
-By using a data structure such as a doubly linked list to maintain the set of
-unused edges incident to each vertex, to maintain the list of vertices on the
-current tour that have unused edges, and to maintain the tour itself, the
-individual operations of the algorithm (finding unused edges exiting each vertex,
-finding a new starting vertex for a tour, and connecting two tours that share a
-vertex) may be performed in constant time each, so the overall algorithm takes linear time,
-
-    -https://en.wikipedia.org/wiki/Eulerian_path#Fleury's_algorithm"""
-
 def test_eularian_cycle(edges=None):
-    """Function takes in an array of edges (to_vert, from_vert) in a graph and adds them to a dictionary.
+    """
+       Problem:
+
+        Determine if a given undirected graph is Eulerian (has an Eulerian Cycle).
+        Euler's Theorem: A connected graph has an Euler cycle if every vertex has an even degree
+        (an even number of edges extending from that vertex).
+
+        Input: A file containing a undirected graph.
+
+        Function:
+
+        Takes in an array of edges (from_vert, to_vert) and creates a dictionary,
+        then counts the number of values for each key.
+        As the input edges are always from of an undirected graph
+        (as per the problem's description),
+        all edges are added to the dictionary twice like so:
+
+        EDGE: (from_vert, to_vert)
+
+        dict[from_vert] = to_vert
+        dict[to_vert] = from_vert
+
+        (ie each vert is both a key and a value)
+
+        Finally iterate through the dictionaries items and check to see if any of the value arrays are odd numbered.
     """
 
+    # No input
     if edges == None:
-        return "Please input a graph to be tested."
+        return "Please input the edges from a graph to be tested."
 
+    # initialize the return boolean
     is_eularian_cycle = True
 
+    # create the edge_dictionary
     edge_dict = {}
+    # iterate through the input edges
     for edge in edges:
+    # check to see if the from_vert is in the dictionary
         if edge[0] not in edge_dict:
+    # if it is, add the [to_vert] as the value of the entry
             edge_dict[edge[0]] = [edge[1]]
         else:
+    # if it is append the new to_vert the from_vert's value array
             edge_dict[edge[0]].append(edge[1])
         if edge[1] not in edge_dict:
+    # check to see if the to_vert is in the dictionary
             edge_dict[edge[1]] = [edge[0]]
         else:
+    # if it is, add the [from_vert] as the value of the entry
             edge_dict[edge[1]].append(edge[0])
 
     print(edge_dict)
 
-
+    # iterate through the items of the dictionaries
+    # and check to see if any vertex has an odd degree.
+    # if it does, retun False.
     for key,value in edge_dict.items():
-        if len(value) != 1 or not len(value) % 2:
-            print(len(value), len(value) % 2)
+    # as it is an undirected graph and we are adding the edges twice,
+    # we'll never have an odd number of edges...
+    # any integer times 2 == even... I'm confused.
+        if len(value) != 1 and len(value) % 2 != 0:
             is_eularian_cycle = False
 
     return "This graph is Eulerian: " + str(is_eularian_cycle)
