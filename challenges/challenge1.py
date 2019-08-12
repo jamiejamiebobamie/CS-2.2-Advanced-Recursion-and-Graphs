@@ -1,4 +1,5 @@
 from collections import deque as d
+import sys
 """Challenge 1
 - Implement the Graph ADT with an adjacency list
 - Implement the Graph ADT with an adjacency matrix
@@ -447,7 +448,8 @@ class LinkedListNode(object):
 
 
 if __name__ == "__main__":
-    filePath = "graph_data.txt"
+    filePath = sys.argv[1]
+    # filePath = "graph_data.txt"
 
     # read file. intialize vertices and edges.
     vertices, edges = read_graph(filePath)
@@ -459,6 +461,8 @@ if __name__ == "__main__":
     for v in vertices:
         new.add_vertex(v)
 
+    print(f"The vertices are: {new.get_vertices()} \n")
+
     # convert source vertex and target vertex integer id's to strings
     # add the edges to the respective dictionaries.
     for source, target in edges:
@@ -468,4 +472,5 @@ if __name__ == "__main__":
 
     # iterating over vertices in the graph and returning the vertices
     # and their neighbors if a
+    print("The edges are: ")
     print(new.__iter__())
