@@ -4,34 +4,15 @@ from graph_reader import *
 
 
 def test_eularian_cycle(g=None):
-    """
-       Problem:
+    """ Takes in an graph object.
+        Checks if the graph's vertices all have an even number of neighbors.
 
-        Determine if a given undirected graph is Eulerian (has an Eulerian Cycle).
-        Euler's Theorem: A connected graph has an Euler cycle if every vertex has an even degree
-        (an even number of edges extending from that vertex).
-
-        Input: A file containing a undirected graph.
-
-        Function:
-
-        Takes in an array of edges (from_vert, to_vert) and creates a dictionary,
-        then counts the number of values for each key.
-        As the input edges are always from of an undirected graph
-        (as per the problem's description),
-        all edges are added to the dictionary twice like so:
-
-        EDGE: (from_vert, to_vert)
-
-        dict[from_vert] = to_vert
-        dict[to_vert] = from_vert
-
-        (ie each vert is both a key and a value)
-
-        Finally iterate through the dictionaries items and check to see if any of the value arrays are odd numbered.
+        Returns a boolean:
+            True if all vertices have an even degree (is Eularian)
+            False if even one vertex has an odd number of neighbors.
     """
 
-    if g == None:
+    if not g:
         return "Please input a graph."
 
     for v in g.vertices:
@@ -40,5 +21,8 @@ def test_eularian_cycle(g=None):
     return True
 
 
-
-    return "This graph is Eulerian: " + str(is_eularian_cycle)
+if __name__ == "__main__":
+    vertices, edges = readGraph("graph_data.txt")
+    g = LLGraph(vertices)
+    g.addEdges(edges)
+    print("This graph is Eulerian: " + str(test_eularian_cycle(g)))

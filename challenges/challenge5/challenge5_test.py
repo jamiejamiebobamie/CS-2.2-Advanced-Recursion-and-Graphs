@@ -7,11 +7,13 @@ vertices, edges = readGraph("graph_data.txt")
 g = LLGraph(vertices)
 g.addEdges(edges)
 assert test_eularian_cycle(g) == True
+print(test_eularian_cycle(g))
 
 # testing a graph with vertices that have all odd degrees.
 vertices, edges = readGraph("graph_data1.txt")
 g = LLGraph(vertices)
 g.addEdges(edges)
 assert test_eularian_cycle(g) == False
+print(test_eularian_cycle(g))
 
 print("tests pass.")

@@ -1,22 +1,23 @@
-# The Graph Abstract Data Type (ADT) is defined as follows:
-#
-# class `Graph()``
-# creates a new, empty graph.
-#
-# has the methods
-# addVertex(vert) adds -> a new vertex
-# addEdge(fromVert, toVert) adds -> a directed edge
-# addEdge(fromVert, toVert, weight) adds -> a weighted, directed edge.
-# getVertex(vertKey) finds -> the named vertKey
-# getVertices() returns -> the list of all vertices.
-#
-# graph should be implemented with an adjacency list.
+"""The Graph Abstract Data Type (ADT) is defined as follows:
+
+class `Graph()``
+creates a new, empty graph.
+
+has the methods
+addVertex(vert) adds -> a new vertex
+addEdge(fromVert, toVert) adds -> a directed edge
+addEdge(fromVert, toVert, weight) adds -> a weighted, directed edge.
+getVertex(vertKey) finds -> the named vertKey
+getVertices() returns -> the list of all vertices.
+
+graph should be implemented with an adjacency list.
 
 
-# NOTE:
-#       I renamed this file graph_adt_list.py,
-#       as opposed to the tutorial's suggested graph-adt-list.py
-#       so that I could import it into other challenge files.
+NOTE:
+      I renamed this file graph_adt_list.py,
+      as opposed to the tutorial's suggested graph-adt-list.py
+      so that I could import it into other challenge files."""
+
 
 class LLGraph(object):
     """An Graph ADT with adjacency list.
@@ -31,7 +32,11 @@ class LLGraph(object):
 
     def getVertex(self, n):
         """returns the associated LinkedList object if it exists."""
-        return self.vertices[n-1] if n-1 < self.numberOfVertices and n > 0 else "Vertex index out of bounds. Please enter a vertex id between 1 and " + str(self.numberOfVertices) + "."
+        return (self.vertices[n-1] if n-1 < self.numberOfVertices
+                and n > 0 else
+                "Vertex index out of bounds." +
+                " Please enter a vertex id between 1 and " +
+                str(self.numberOfVertices) + ".")
 
     def getVertices(self):
         """returns the id's/data of all the vertices in the graph"""
@@ -41,22 +46,24 @@ class LLGraph(object):
         return result
 
     def getNeighborsOfAVertex(self, vertex):
-        """returns the id's/data of all of the neighbors of a given vertex."""
+        """returns the id's/data of all of the neighbors of a given vertex.
+        """
         if vertex > 0 and vertex-1 < self.numberOfVertices:
             return self.vertices[vertex-1].getNeighbors()
 
     def getEdges(self, vertex):
-        """returns the the edges for a single vertex"""
-        # print(vertex, self.vertices[vertex-1])
+        """returns the the edges for a single vertex.
+        """
         return self.vertices[vertex-1].getEdges()
 
     def addEdge(self, f, t, cost=1):
-        """add an edge from vertex f (a number) to vertex t (a number) with a default cost/weight of 1
+        """add an edge from vertex f (a number) to vertex t (a number)
+        with a default cost/weight of 1.
         """
         for i, v in enumerate(self.vertices):
             f = str(f)
             if v.id == f:
-                self.vertices[i].addNeighbor(t,cost)
+                self.vertices[i].addNeighbor(t, cost)
 
     def addEdges(self, edgeData):
         """add the edges from an array of edge data.
@@ -78,7 +85,8 @@ class LLGraph(object):
         self.vertices.append(new_linked_list)
 
     def findVertexIndex(self, vertex_id):
-        """vertex argument is a string that is the label or id of the vertex , NOT a linkedlist object
+        """vertex argument is a string that is the label or id of the vertex ,
+        NOT a linkedlist object
         returns the vertices index in the graph if present
         otherwise returns False
         admittedly this should be a method of the graph class...
@@ -87,7 +95,6 @@ class LLGraph(object):
             if int(v.id) == int(vertex_id):
                 return i
         return False
-
 
     def __iter__(self):
         """iterate over the vertex objects in the
@@ -101,16 +108,16 @@ class LLGraph(object):
 
 class LinkedList(object):
     def __init__(self, vertex=None, head=None, tail=None):
-        self.id = vertex # this is a string!
+        self.id = vertex  # this is a string!
         self.length = 0
-        self.head = head # the first vertex connected to the vertex at self.id.
+        self.head = head  # the first vertex after the vertex at self.id.
         self.tail = tail
 
-    def addNeighbor(self,data, weight=1):
+    def addNeighbor(self, data, weight=1):
         """Adds a single vertex to the linked list.
         """
         new_vertex = LinkedListNode(data, weight)
-        if self.head == None:
+        if not self.head:
             self.head = self.tail = new_vertex
         elif self.head == self.tail:
             self.tail = new_vertex
@@ -136,16 +143,17 @@ class LinkedList(object):
         """
         result = []
         node = self.head
-        if node == None:
+        if not node:
             return "No out-going edges."
         if self.head != self.tail:
             while node:
-                result.append((int(self.id),node.data,node.weight))
+                result.append((int(self.id), node.data, node.weight))
                 node = node.next
             else:
                 return result
         else:
-            return (int(self.id),node.data,node.weight)
+            return (int(self.id), node.data, node.weight)
+
 
 class LinkedListNode(object):
     def __init__(self, data, weight=1):
