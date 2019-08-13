@@ -180,7 +180,10 @@ class Graph:
 
     def get_vertices(self):
         """return all the vertices in the graph"""
-        return self.vertList.keys()
+        result = []
+        for v in self.vertList.keys():
+            result.append(v)
+        return result
         # return all of the keys in the self.vertList dictionary,
         # string vertex_ids
 
@@ -190,7 +193,8 @@ class Graph:
         """
         result = []
         for v in self.vertList:
-            result.append((v, self.vertList[v].get_neighbors()))
+            for neighbor in self.vertList[v].get_neighbors():
+                result.append((v, neighbor))
         return result
         # return all of the vertex objects of the graph
 
@@ -449,7 +453,6 @@ class LinkedListNode(object):
 
 if __name__ == "__main__":
     filePath = sys.argv[1]
-    # filePath = "graph_data.txt"
 
     # read file. intialize vertices and edges.
     vertices, edges = read_graph(filePath)
@@ -461,7 +464,8 @@ if __name__ == "__main__":
     for v in vertices:
         new.add_vertex(v)
 
-    print(f"The vertices are: {new.get_vertices()} \n")
+    # iterate through the array of vertices and append them to the string.
+    print("The vertices are: " +", ".join(new.get_vertices())+"\n")
 
     # convert source vertex and target vertex integer id's to strings
     # add the edges to the respective dictionaries.
@@ -472,5 +476,7 @@ if __name__ == "__main__":
 
     # iterating over vertices in the graph and returning the vertices
     # and their neighbors if a
+    graph_edges = new.__iter__()
     print("The edges are: ")
-    print(new.__iter__())
+    for edge in graph_edges:
+        print(edge)
