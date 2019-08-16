@@ -17,7 +17,8 @@ def test_eularian_cycle(g=None):
         return "Please input a graph."
 
     for v in g.vertices:
-        if len(v.getNeighbors()) % 2:
+        # if len(v.getNeighbors()) % 2:
+        if len(v.getNeighbors()) % 2 != 0:
             return False
     return True
 
