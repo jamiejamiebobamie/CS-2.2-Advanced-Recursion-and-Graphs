@@ -1,3 +1,4 @@
+import sys
 import random
 from graph_adt_list import *
 from graph_reader import *
@@ -22,7 +23,14 @@ def test_eularian_cycle(g=None):
 
 
 if __name__ == "__main__":
-    vertices, edges = readGraph("graph_data.txt")
+
+    file_path = sys.argv[1]
+
+    if file_path:
+        vertices, edges = readGraph(file_path)
+    else:
+        vertices, edges = readGraph("graph_data.txt")
+
     g = LLGraph(vertices)
     g.addEdges(edges)
     print("This graph is Eulerian: " + str(test_eularian_cycle(g)))
