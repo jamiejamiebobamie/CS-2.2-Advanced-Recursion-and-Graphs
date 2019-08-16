@@ -17,8 +17,25 @@ def test_eularian_cycle(g=None):
         return "Please input a graph."
 
     for v in g.vertices:
-        # if len(v.getNeighbors()) % 2:
-        if len(v.getNeighbors()) % 2 != 0:
+
+        # I looked at Vincenzo's code for guidance
+        # and implemented the edge case of there being no neighbors.
+        # https://github.com/C3NZ/CS22/blob/
+            # ded71687fc91aa6f6b5d7c7a86ffde7fb570d7c0/
+                # challenges/graphs/graph.py#L358
+
+        # I also double checked what was being returned by .getNeighbors()
+            # which is an array of all the vertices
+                # that are adjacent to a given vertex.
+
+        # Example:
+        # [2, 5]
+        # [1, 3]
+        # [2, 4]
+        # [3, 5]
+        # [4, 1]
+
+        if len(v.getNeighbors()) % 2 != 0 or len(v.getNeighbors()) == 0 :
             return False
     return True
 
